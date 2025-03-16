@@ -19,10 +19,10 @@ export default function RecipeTabs({ recipe }: RecipeTabsProps) {
 
   return (
     <div className="mb-16">
-      <div className="flex border-b border-gray-200 mb-4">
+      <div className="flex border-b justify-between md:justify-start border-gray-200 mb-4">
         <button
           onClick={() => setActiveTab(Tab.Ingredients)}
-          className={`py-3 px-6 font-medium ${
+          className={`py-3 md:px-6 font-medium ${
             activeTab === Tab.Ingredients
               ? "border-b-2 border-orange-500 text-orange-600"
               : "text-gray-600 hover:text-orange-500"
@@ -32,7 +32,7 @@ export default function RecipeTabs({ recipe }: RecipeTabsProps) {
         </button>
         <button
           onClick={() => setActiveTab(Tab.Instructions)}
-          className={`py-3 px-6 font-medium ${
+          className={`py-3 md:px-6 font-medium ${
             activeTab === Tab.Instructions
               ? "border-b-2 border-orange-500 text-orange-600"
               : "text-gray-600 hover:text-orange-500"
@@ -42,7 +42,7 @@ export default function RecipeTabs({ recipe }: RecipeTabsProps) {
         </button>
         <button
           onClick={() => setActiveTab(Tab.Nutrition)}
-          className={`py-3 px-6 font-medium ${
+          className={`py-3 md:px-6 font-medium ${
             activeTab === Tab.Nutrition
               ? "border-b-2 border-orange-500 text-orange-600"
               : "text-gray-600 hover:text-orange-500"

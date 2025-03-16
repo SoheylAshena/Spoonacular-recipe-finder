@@ -12,6 +12,7 @@ export default function Navbar() {
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Initialize search query from URL params if on recipes page
   useEffect(() => {
@@ -32,6 +33,11 @@ export default function Navbar() {
 
     router.push(`/recipes?${params.toString()}`);
   };
+
+  // Close mobile menu when navigating to a new page
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   return (
     <>
@@ -83,8 +89,13 @@ export default function Navbar() {
                 </li>
               </ul>
 
-              {/* Mobile menu button - would expand in a real implementation */}
-              <button className="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors">
+              {/* Mobile menu button */}
+              <button
+                className="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label="Toggle mobile menu"
+                aria-expanded={mobileMenuOpen}
+              >
                 <svg
                   className="w-6 h-6"
                   fill="none"
@@ -96,10 +107,58 @@ export default function Navbar() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M4 6h16M4 12h16m-7 6h7"
+                    d={
+                      mobileMenuOpen
+                        ? "M6 18L18 6M6 6l12 12"
+                        : "M4 6h16M4 12h16m-7 6h7"
+                    }
                   />
                 </svg>
               </button>
+            </div>
+
+            {/* Mobile Menu - Slides down when open */}
+            <div
+              className={`w-full md:hidden transition-all duration-300 overflow-hidden ${
+                mobileMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+              }`}
+            >
+              <ul className="flex flex-col py-2 border-t border-white/20">
+                <li>
+                  <Link
+                    href="/"
+                    className={`block px-4 py-2 hover:bg-white/10 transition-colors ${
+                      pathname === "/" ? "bg-white/20 text-yellow-200" : ""
+                    }`}
+                  >
+                    <FaHome className="inline-block mr-2" /> Home
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/recipes"
+                    className={`block px-4 py-2 hover:bg-white/10 transition-colors ${
+                      pathname === "/recipes"
+                        ? "bg-white/20 text-yellow-200"
+                        : ""
+                    }`}
+                  >
+                    <FaUtensils className="inline-block mr-2" /> Recipes
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/favorites"
+                    className={`block px-4 py-2 hover:bg-white/10 transition-colors ${
+                      pathname === "/favorites"
+                        ? "bg-white/20 text-yellow-200"
+                        : ""
+                    }`}
+                  >
+                    <FaHeart className="inline-block mr-2" /> Favorites
+                  </Link>
+                </li>
+              </ul>
             </div>
 
             {/* Search bar shown only on recipes page */}
